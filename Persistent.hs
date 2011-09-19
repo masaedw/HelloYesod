@@ -32,3 +32,11 @@ main = withSqliteConn ":memory:" $ runSqlConn $ do
 
     delete janeId
     deleteWhere [BlogPostAuthorId ==. johnId]
+
+main2 :: IO ()
+main2 = withSqliteConn ":memory:" $ runSqlConn $ do
+    runMigration migrateAll
+
+    michaelId <- insert $ Person "Michael" $ Just 26
+    michael <- get michaelId
+    liftIO $ print michael
